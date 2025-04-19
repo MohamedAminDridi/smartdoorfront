@@ -1,0 +1,63 @@
+<form>
+  <label>Door Name:</label>
+  <input type="text" [(ngModel)]="newDoor.name" name="doorName" required />
+
+  <label>Location:</label>
+  <input type="text" [(ngModel)]="newDoor.location" name="doorLocation" required />
+
+  <button type="button" (click)="addDoor()">Add Door</button>
+</form>
+<div class="door-cards-container">
+  
+  <div 
+    class="card clickable-card"
+    *ngFor="let door of doors"
+    (click)="onCardClick(door)"
+  >
+    <p><strong>{{ door.name }}</strong> - {{ door.location }}</p>
+    <p>Status: <strong>{{ door.status }}</strong></p>
+
+    <img [src]="getDoorImage(door.status)" alt="Door Status" class="door-image">
+
+    <button 
+      *ngIf="isAdmin" 
+      class="toggle" 
+      (click)="toggleDoorStatus(door); $event.stopPropagation()"
+    >
+      Open/Close
+    </button>
+
+    <div class="remote-buttons">
+      <button (click)="toggleLED('on'); $event.stopPropagation()">Remote Open Door</button>
+      <button (click)="toggleLED('off'); $event.stopPropagation()">Remote Close Door</button>
+    </div>
+
+    <button 
+      *ngIf="isAdmin" 
+      class="remove" 
+      (click)="removeDoor(door._id); $event.stopPropagation()"
+    >
+      Remove
+    </button>
+
+    <div class="owners-section">
+      <p><strong>Owners:</strong></p>
+      <ul>
+        <li *ngFor="let owner of door.owners">
+          {{ owner.username }}
+          <button 
+            *ngIf="isAdmin" 
+            (click)="removeOwner(door._id, owner._id); $event.stopPropagation()"
+          >❌</button>
+        </li>
+      </ul>
+    </div>
+
+    <div *ngIf="isAdmin" class="add-owner-section">
+      <select [(ngModel)]="selectedUser" (click)="$event.stopPropagation()">
+        <option *ngFor="let user of users" [value]="user._id">{{ user.username }}</option>
+      </select>
+      <button (click)="addOwner(door._id); $event.stopPropagation()">➕ Add Owner</button>
+    </div>
+  </div>
+</div>

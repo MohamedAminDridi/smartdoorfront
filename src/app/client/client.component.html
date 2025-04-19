@@ -1,0 +1,49 @@
+<div class="client-page">
+    <h2>My Doors</h2>
+    
+    <!-- Show message if no doors are assigned -->
+    <div *ngIf="myDoors.length === 0" class="no-doors-message">
+      <p>You don't have any doors assigned to you yet.</p>
+    </div>
+  
+    <!-- Display cards for each owned door -->
+    <div class="door-cards-container">
+      <div 
+        class="card clickable-card"
+        *ngFor="let door of myDoors"
+        (click)="onCardClick(door)"
+      >
+        <p><strong>{{ door.name }}</strong> - {{ door.location }}</p>
+        <p>Status: 
+          <strong [ngClass]="door.status === 'open' ? 'status-open' : 'status-closed'">
+            {{ door.status }}
+          </strong>
+        </p>
+  
+        <img [src]="getDoorImage(door.status)" alt="Door Status" class="door-image" />
+  
+        <button 
+          class="toggle" 
+          (click)="toggleDoorStatus(door); $event.stopPropagation()"
+        >
+          Open/Close
+        </button>
+  
+        <div class="remote-buttons">
+          <button (click)="toggleLED('on'); $event.stopPropagation()">Remote Open Door</button>
+          <button (click)="toggleLED('off'); $event.stopPropagation()">Remote Close Door</button>
+        </div>
+  
+        <div class="owners-section">
+          <p><strong>Owners:</strong></p>
+          <ul>
+            <li *ngFor="let owner of door.owners">
+              {{ owner.username }}
+ 
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  

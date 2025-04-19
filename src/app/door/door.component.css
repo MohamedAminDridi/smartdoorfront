@@ -1,0 +1,67 @@
+.door-container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* Card layout container */
+.door-cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* Individual door card */
+.card {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  width: 280px;
+  padding: 16px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  background-color: #f9f9f9;
+}
+
+/* Admin form spacing */
+.admin-actions,
+.add-owner-section {
+  margin-bottom: 15px;
+}
+
+/* Door image styling */
+.door-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 10px 0;
+}
+
+/* Remote button group */
+.remote-buttons button {
+  margin: 5px;
+}
+
+/* General button styling */
+button {
+  margin: 5px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* Owner list cleanup */
+.owners-section ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+.clickable-card {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.clickable-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}

@@ -1,0 +1,25 @@
+<div class="auth-container">
+  <div class="auth-box">
+    <h2>Register New User</h2>
+    
+    <form (ngSubmit)="onSubmit()">
+      <label for="username">Username:</label>
+      <input type="text" id="username" [(ngModel)]="user.username" name="username" required />
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" [(ngModel)]="user.password" name="password" required />
+
+      <!-- Role Selection (Only for Admins) -->
+      <div *ngIf="isAdmin">
+        <label for="role">Role:</label>
+        <select id="role" [(ngModel)]="user.role" name="role" required>
+          <option value="admin">Admin</option>
+          <option value="client">Client</option>
+        </select>
+      </div>
+
+      <button type="submit">Register</button>
+      <p *ngIf="message">{{ message }}</p>
+    </form>
+  </div>
+</div>
