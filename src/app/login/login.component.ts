@@ -69,23 +69,51 @@ export class LoginComponent {
   private router = inject(Router);
 
   onSubmit() {
-    this.registerService.login(this.user).subscribe({
-      next: (response) => {
-        console.log('Login Response:', response);
-        localStorage.setItem('token', response.token);
-        localStorage.setItem('userId', response.user._id);
-        localStorage.setItem('role', response.user.role);
+  //   this.registerService.login(this.user).subscribe({
+  //     next: (response) => {
+  //       console.log('Login Response:', response);
+  //       localStorage.setItem('token', response.token);
+  //       localStorage.setItem('userId', response.user._id);
+  //       localStorage.setItem('role', response.user.role);
 
-        // Navigate to the appropriate page based on user role
-        if (response.user.role === 'admin') {
-          this.router.navigate(['/door']);
-        } else {
-          this.router.navigate(['/client']);
-        }
-      },
-      error: (error) => {
-        this.message = 'Invalid username or password';
-      },
-    });
-  }
+  //       // Navigate to the appropriate page based on user role
+  //       if (response.user.role === 'admin') {
+  //         this.router.navigate(['/door']);
+  //       } else {
+  //         this.router.navigate(['/client']);
+  //       }
+  //     },
+  //     error: (error) => {
+  //       this.message = 'Invalid username or password';
+  //     },
+  //   });
+  // }
+  this.registerService.login(this.user).subscribe({
+    next: (response: any) => {
+      console.log('Full API Response:', response);  // Debugging step
+      localStorage.setItem('token', response.token);
+      localStorage.setItem('userId', response.user._id);
+      localStorage.setItem('role', response.user.role);
+      console.log('✅ Login successful');
+      console.log('Token Saved:', localStorage.getItem('token')); 
+
+      
+      // ✅ Navigate to doors page
+      if (response.user.role === 'admin') {
+        localStorage.setItem('token', response.token);
+console.log('Token Saved:', localStorage.getItem('token'));
+        this.router.navigate(['/door']);
+      } else {
+        this.router.navigate(['/client-doors']);
+      }
+    },
+    error: (error) => {
+      console.error('❌ Login failed', error);
+      this.message = 'Invalid username or password';
+    }
+    
+  });
+
+}
+
 }

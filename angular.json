@@ -32,6 +32,7 @@
             ],
             "scripts": [],
             "server": "src/main.server.ts",
+            
             "outputMode": "server",
             "ssr": {
               "entry": "src/server.ts"
@@ -61,7 +62,9 @@
           },
           "defaultConfiguration": "production"
         },
-        "serve": {
+        "serve": {"options": {
+    "proxyConfig": "proxy.conf.json"
+  },
   "builder": "@angular-devkit/build-angular:dev-server",
   "configurations": {
     "production": {

@@ -31,8 +31,13 @@ export class RegisterService {
   }
 
   // Login a user
-  login(user: { username: string, password: string }): Observable<any> {
-    return this.http.post(`${this.apiUrl}/auth/login`, user);
+  login(user: { username: string; password: string }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/auth/login`, user, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      withCredentials: true
+    });
   }
 
   // Logout
