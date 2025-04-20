@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 @Component({
   selector: 'app-doors',
   standalone: true,
@@ -20,7 +21,7 @@ export class DoorComponent implements OnInit {
   private doorService = inject(DoorService);
   isAdmin = localStorage.getItem('role') === 'admin';
   private http = inject(HttpClient); // ✅ Inject HttpClient
-  private API_URL = 'http://localhost:5000/api/doors';
+  private API_URL = environment.apiUrldoor;;
   private Api_url = 'http://localhost:5000/api/doors-by-owner';
   selectedUser: string = ''; 
   constructor(private router: Router) {}

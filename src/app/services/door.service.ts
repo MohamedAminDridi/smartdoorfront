@@ -8,7 +8,7 @@ import { environment } from '../../environments/environment';
 })
 export class DoorService {
   //private apiUrl = 'https://your-backend-url.com/api/doors'; // change to your deployed backend
-private apiUrl = environment.apiUrl;
+private apiUrl = environment.apiUrldoor;
   constructor(private http: HttpClient) {}
 
   /** 🔐 Helper to get auth headers */
