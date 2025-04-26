@@ -1,0 +1,34 @@
+.logs-container {
+    padding: 20px;
+    max-width: 1000px;
+    margin: auto;
+    font-family: Arial, sans-serif;
+  }
+  
+  .logs-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .logs-table th,
+  .logs-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .logs-table th {
+    background-color: #f4f4f4;
+  }
+  
+  .logs-table td.opened {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .logs-table td.closed {
+    color: red;
+    font-weight: bold;
+  }
+  

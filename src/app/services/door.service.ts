@@ -22,7 +22,14 @@ private apiUrl = environment.apiUrldoor;
       withCredentials: true
     };
   }
-
+  unlockDoor(ip: string): Observable<any> {
+    return this.http.get(`http://${ip}/lock/on`);
+  }
+  
+  /** 🔒 Lock a specific door */
+  lockDoor(ip: string): Observable<any> {
+    return this.http.get(`http://${ip}/lock/off`);
+  }
   /** ✅ Get all doors */
   getDoors(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl, this.getAuthHeaders());
@@ -62,14 +69,21 @@ private apiUrl = environment.apiUrldoor;
   getUsers(): Observable<any[]> {
     return this.http.get<any[]>('https://smart-door-backend.onrender.com/api/auth', this.getAuthHeaders());
   }
+//
+updateDoorStatusWithLog(doorId: string, action: 'opened' | 'closed') {
+  return this.http.post(`/api/doors/${doorId}/${action}`, {});
+}
 
-  /** ✅ Log an access event (entry/exit) */
-  logAccess(doorId: string, ownerId: string, action: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/log-access`, { doorId, ownerId, action }, this.getAuthHeaders());
-  }
+createLog(logData: any) {
+  return this.http.post(`https://smart-door-backend.onrender.com/api/logs`, logData);
+}
+  // /** ✅ Log an access event (entry/exit) */
+  // logAccess(doorId: string, ownerId: string, action: string): Observable<any> {
+  //   return this.http.post(`${this.apiUrl}/log-access`, { doorId, ownerId, action }, this.getAuthHeaders());
+  // }
 
-  /** ✅ Get access logs for a specific door */
-  getDoorLogs(doorId: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/${doorId}/logs`, this.getAuthHeaders());
-  }
+  // /** ✅ Get access logs for a specific door */
+  // getDoorLogs(doorId: string): Observable<any> {
+  //   return this.http.get(`${this.apiUrl}/${doorId}/logs`, this.getAuthHeaders());
+  // }
 }

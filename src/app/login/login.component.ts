@@ -104,7 +104,7 @@ export class LoginComponent {
 console.log('Token Saved:', localStorage.getItem('token'));
         this.router.navigate(['/door']);
       } else {
-        this.router.navigate(['/client-doors']);
+        this.router.navigate(['/client']);
       }
     },
     error: (error) => {

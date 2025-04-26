@@ -1,0 +1,48 @@
+<!-- <nav class="navbar">
+    <div class="logo">
+      <a routerLink="/">Smart Door</a>
+    </div>
+  
+    <ul class="nav-links">
+      <li *ngIf="isLoggedIn()">
+        <a routerLink="/doors">Doors</a>
+      </li>
+  
+      <li *ngIf="getRole() === 'admin'">
+        <a routerLink="/logs">Logs</a>
+      </li>
+  
+      <li *ngIf="getRole() === 'admin'">
+        <a routerLink="/admin">Admin Panel</a>
+      </li>
+  
+      <li *ngIf="!isLoggedIn()">
+        <a routerLink="/login">Login</a>
+      </li>
+  
+      <li *ngIf="isLoggedIn()">
+        <button class="logout-btn" (click)="logout()">Logout</button>
+      </li>
+    </ul>
+  </nav>
+   
+   <nav class="navbar">
+    <ul class="nav-links">
+      <li><a routerLink="/">Home</a></li>
+  
+      <li *ngIf="getRole() === 'admin'"><a routerLink="/register">Register</a></li>
+      <li *ngIf="getRole() === 'admin'"><a routerLink="/door">Manage Doors</a></li>
+      <li *ngIf="getRole() === 'client'"><a routerLink="/client">My Doors</a></li>
+      
+      <li *ngIf="isLoggedIn()">
+        <span class="user-info">Logged in as {{ getRole() }}</span>
+      </li>
+  
+      <li *ngIf="isLoggedIn()">
+        <button (click)="logout()">Logout</button>
+      </li>
+  
+      <li *ngIf="!isLoggedIn()"><a routerLink="/login">Login</a></li>
+    </ul>
+  </nav>
+  -->

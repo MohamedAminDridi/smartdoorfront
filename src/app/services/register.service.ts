@@ -44,11 +44,27 @@ export class RegisterService {
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
+    localStorage.removeItem('role');
     this.router.navigate(['/login']);
   }
 
   // Check if user is logged in
   isLoggedIn(): boolean {
     return !!localStorage.getItem('token');
+  }
+
+
+
+  saveUserInfo(userId: string, role: string) {
+    localStorage.setItem('userId', userId);
+    localStorage.setItem('role', role);
+  }
+
+  getRole(): string | null {
+    return localStorage.getItem('role');
+  }
+
+  getUserId(): string | null {
+    return localStorage.getItem('userId');
   }
 }

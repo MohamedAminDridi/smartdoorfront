@@ -21,8 +21,8 @@ export class DoorComponent implements OnInit {
   private doorService = inject(DoorService);
   isAdmin = localStorage.getItem('role') === 'admin';
   private http = inject(HttpClient); // ✅ Inject HttpClient
-  private API_URL = environment.apiUrldoor;;
-  private Api_url = 'http://localhost:5000/api/doors-by-owner';
+  private API_URL = environment.apiUrldoor;
+  //private Api_url = 'http://localhost:5000/api/doors-by-owner';
   selectedUser: string = ''; 
   constructor(private router: Router) {}
 
@@ -66,13 +66,36 @@ export class DoorComponent implements OnInit {
     return status === 'open'
       ? '/assets/images/green.jpg' 
     : '/assets/images/red.jpg';}
-  toggleDoorStatus(door: any) {
-    const newStatus = door.status === 'open' ? 'closed' : 'open';
-  
-    this.doorService.updateDoorStatus(door._id, newStatus).subscribe((updatedDoor) => {
-      door.status = updatedDoor.status;
-    });
-  }
+    toggleDoorStatus(door: any) {
+      // Flip the status
+      door.status = door.status === 'open' ? 'closed' : 'open';
+    
+      // Update the door status on the server
+      this.doorService.updateDoorStatus(door._id, door.status).subscribe(
+        (updatedDoor) => {
+          console.log('Door status updated:', updatedDoor);
+    
+          // AFTER successful update => Create a new log
+          const log = {
+            doorId: door._id,
+            status: door.status,
+            timestamp: new Date()
+          };
+          this.doorService.createLog(log).subscribe(
+            (savedLog) => {
+              console.log('Log saved successfully:', savedLog);
+            },
+            (error) => {
+              console.error('Error saving log:', error);
+            }
+          );
+    
+        },
+        (error) => {
+          console.error('Error updating door status:', error);
+        }
+      );
+    }
   toggleLED(state: string) {
     this.http.post(`${this.API_URL}/led/${state}`, {}).subscribe({
       next: (response) => {
@@ -139,18 +162,18 @@ export class DoorComponent implements OnInit {
     });
   }
 
-  logAccess(doorId: string, action: string) {
-    const ownerId = localStorage.getItem('userId');
-    if (!ownerId) {
-      console.error("❌ Error: User ID not found in localStorage");
-      return;
-    }
+  // logAccess(doorId: string, action: string) {
+  //   const ownerId = localStorage.getItem('userId');
+  //   if (!ownerId) {
+  //     console.error("❌ Error: User ID not found in localStorage");
+  //     return;
+  //   }
   
-    this.doorService.logAccess(doorId, ownerId, action).subscribe({
-      next: (response) => console.log("✅ Access logged:", response),
-      error: (err) => console.error("❌ Error logging access:", err),
-    });
-  }
+  //   this.doorService.logAccess(doorId, ownerId, action).subscribe({
+  //     next: (response) => console.log("✅ Access logged:", response),
+  //     error: (err) => console.error("❌ Error logging access:", err),
+  //   });
+  // }
 
  /** ✅ Fetch owners of a specific door */
  getOwners(doorId: string) {
@@ -176,8 +199,19 @@ addOwner(doorId: string) {
     (error) => console.error('Error adding owner:', error)
   );
 }
-readonly STREAM_URL = 'http://192.168.43.182:81/stream';
+readonly STREAM_URL = 'https://f0fa-102-152-221-52.ngrok-free.app:81/stream';
+//
+lockOpen(door: any) {
+  this.doorService.unlockDoor(door.ip).subscribe(() => {
+    alert(`🔓 Lock opened for ${door.doorName}`);
+  });
+}
 
+lockClose(door: any) {
+  this.doorService.lockDoor(door.ip).subscribe(() => {
+    alert(`🔒 Lock closed for ${door.doorName}`);
+  });
+}
 onCardClick(door: any) {
   console.log('Redirecting to camera stream...');
   window.location.href = this.STREAM_URL;
