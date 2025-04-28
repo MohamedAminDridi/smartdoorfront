@@ -64,8 +64,8 @@ export class DoorComponent implements OnInit {
 
   getDoorImage(status: string): string {
     return status === 'open'
-      ? '/assets/images/green.jpg' 
-    : '/assets/images/red.jpg';}
+      ? '/assets/images/green.png' 
+    : '/assets/images/red.png';}
     toggleDoorStatus(door: any) {
       // Flip the status
       door.status = door.status === 'open' ? 'closed' : 'open';

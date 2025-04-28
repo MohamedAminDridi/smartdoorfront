@@ -3,6 +3,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
+interface CurrentUser {
+  username: string;
+  role: string;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -47,7 +51,22 @@ export class RegisterService {
     localStorage.removeItem('role');
     this.router.navigate(['/login']);
   }
+  getToken() {
+    return localStorage.getItem('token');
+  }
 
+  getCurrentUser(): CurrentUser | null {
+  const username = localStorage.getItem('username');
+  const role = localStorage.getItem('role');
+
+  if (!username || !role) {
+    return null;
+  }
+
+  return { username, role };
+}
+
+ 
   // Check if user is logged in
   isLoggedIn(): boolean {
     return !!localStorage.getItem('token');
@@ -55,9 +74,10 @@ export class RegisterService {
 
 
 
-  saveUserInfo(userId: string, role: string) {
+  saveUserInfo(userId: string, role: string, username: string) {
     localStorage.setItem('userId', userId);
     localStorage.setItem('role', role);
+    localStorage.setItem('username', username);
   }
 
   getRole(): string | null {

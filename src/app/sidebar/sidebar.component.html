@@ -1,0 +1,19 @@
+<div class="sidebar">
+    <div class="sidebar-header">
+      <h2>Smart Door</h2>
+    </div>
+  
+    <div class="sidebar-user">
+      <p>{{ username }}</p>
+      <small>Logged in as {{ role }}</small>
+    </div>
+  
+    <ul class="sidebar-links">
+        <li><button [routerLink]="['/dashboard']" class="sidebar-button">Dashboard</button></li>
+<li><button [routerLink]="['/logs']" class="sidebar-button">Logs</button></li>
+<li><button [routerLink]="['/door']" class="sidebar-button">Doors</button></li>
+<li><button [routerLink]="['/settings']" class="sidebar-button">Settings</button></li>
+
+    </ul>
+  </div>
+  
