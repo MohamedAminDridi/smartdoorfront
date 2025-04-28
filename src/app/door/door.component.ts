@@ -77,8 +77,9 @@ export class DoorComponent implements OnInit {
     
           // AFTER successful update => Create a new log
           const log = {
+            user: localStorage.getItem('userId'), // who's doing the action
             doorId: door._id,
-            status: door.status,
+            action: door.status === 'open' ? 'opened' : 'closed', // map door status to action
             timestamp: new Date()
           };
           this.doorService.createLog(log).subscribe(

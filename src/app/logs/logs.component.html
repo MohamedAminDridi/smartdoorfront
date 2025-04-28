@@ -1,27 +1,29 @@
 <div class="logs-container">
-    <h2>Door Logs</h2>
-  
-    <table *ngIf="logs.length > 0" class="logs-table">
-      <thead>
-        <tr>
-          <th>User</th>
-          <th>Email</th>
-          <th>Door</th>
-          <th>Action</th>
-          <th>Timestamp</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let log of logs">
-          <td>{{ log.user.name }}</td>
-          <td>{{ log.user.email }}</td>
-          <td>{{ log.doorId.name }}</td>
-          <td [ngClass]="log.action">{{ log.action }}</td>
-          <td>{{ formatDate(log.timestamp) }}</td>
-        </tr>
-      </tbody>
-    </table>
-  
-    <p *ngIf="logs.length === 0">No logs found.</p>
-  </div>
-  
+  <h2>Door Logs</h2>
+
+  <!-- Sorting control -->
+  <button (click)="toggleSortDirection()">
+    Sort by Timestamp ({{ sortDirection === 'asc' ? 'Ascending' : 'Descending' }})
+  </button>
+
+  <table *ngIf="logs.length > 0" class="logs-table">
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Door</th>
+        <th>Action</th>
+        <th>Timestamp</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let log of logs">
+        <td>{{ log.user.username || 'Unknown User' }}</td>
+        <td>{{ log.doorId.name || 'Unknown Door' }}</td>
+        <td [ngClass]="log.action">{{ log.action }}</td>
+        <td>{{ formatDate(log.timestamp) }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="logs.length === 0">No logs found.</p>
+</div>
